@@ -44,9 +44,9 @@ async function main() {
       process.exit(1);
     }
     
-    console.log('[Keygen] Generating compressed public key...');
-    const compressedPublicKey = fhis.FhisShortintCompressedPublicKey.new(clientKey);
-    console.log('[Keygen] Compressed public key generated');
+    console.log('[Keygen] Generating compact public key...');
+    const compressedPublicKey = fhis.FhisShortintCompactPublicKey.new(clientKey);
+    console.log('[Keygen] Compact public key generated');
 
     console.log('[Keygen] Generating server key...');
     const serverKey = fhis.FhisShortintServerKey.new(clientKey);
