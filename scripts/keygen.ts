@@ -12,8 +12,22 @@ console.log('╚═════════════════════�
 async function main() {
   try {
     console.log('[Keygen] Importing fhish-wasm...');
-    const fhis = await import('fhish-wasm');
-    console.log('[Keygen] fhish-wasm imported');
+    let fhis;
+    try {
+      // Try Docker path first
+      fhis = await import('/packages/fhish-wasm/pkg-node/fhish_wasm.js');
+      console.log('[Keygen] Imported from Docker path');
+    } catch (e) {
+      try {
+        // Try local dev path
+        fhis = await import('../../packages/fhish-wasm/pkg-node/fhish_wasm.js');
+        console.log('[Keygen] Imported from local dev path');
+      } catch (e2) {
+        // Fallback to module
+        fhis = await import('fhish-wasm');
+        console.log('[Keygen] Imported as module');
+      }
+    }
     
     console.log('[Keygen] Generating keys...');
     
