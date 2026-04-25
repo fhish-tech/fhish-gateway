@@ -3,7 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const keysDir = path.join(__dirname, '../keys');
+const keysDir = path.join(__dirname, '../keys-shortint');
 
 console.log('╔══════════════════════════════════════════════════════╗');
 console.log('║         FHISH KEY GENERATION (fhish-wasm)         ║');
