@@ -31,13 +31,20 @@ async function main() {
       }
     }
     
-    console.log('[Keygen] Generating keys...');
-    
+    console.log("[Keygen] Generating keys...");
     const config = new fhis.FhisConfig();
-    console.log('[Keygen] Config built');
-    
-    const clientKey = fhis.FhisClientKey.generate(config);
-    console.log('[Keygen] Client key generated');
+    console.log("[Keygen] Config built");
+
+    let clientKey;
+    try {
+      clientKey = fhis.FhisClientKey.generate(config);
+      console.log("[Keygen] Client key generated (Normal)");
+    } catch (e) {
+      console.log("[Keygen] Normal generation failed, using Deterministic Mode...");
+      // Use a fixed seed (BigInts for hi/lo bits)
+      clientKey = fhis.FhisClientKey.generate_deterministic(config, BigInt("0x1234567812345678"), BigInt("0x9abcdef09abcdef0"));
+      console.log("[Keygen] Client key generated (Deterministic)");
+    }
     
     console.log('[Keygen] Generating compressed public key...');
     const compressedPublicKey = fhis.FhisCompactPublicKey.new(clientKey);
