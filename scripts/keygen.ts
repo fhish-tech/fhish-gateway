@@ -15,11 +15,13 @@ async function main() {
     let fhis;
     try {
       // Try Docker path first
+      // @ts-ignore
       fhis = await import('/packages/fhish-wasm/pkg-node/fhish_wasm.js');
       console.log('[Keygen] Imported from Docker path');
     } catch (e) {
       try {
         // Try local dev path
+        // @ts-ignore
         fhis = await import('../../packages/fhish-wasm/pkg-node/fhish_wasm.js');
         console.log('[Keygen] Imported from local dev path');
       } catch (e2) {
