@@ -1,0 +1,37 @@
+{
+  "name": "fhish-gateway",
+  "version": "1.0.0",
+  "description": "FHISH Gateway — Independent FHE decryption service",
+  "type": "module",
+  "main": "dist/server.js",
+  "scripts": {
+    "start": "node dist/server.js",
+    "dev": "tsx --import ./src/polyfill.mjs src/server.ts",
+    "build": "tsc",
+    "keygen": "tsx scripts/keygen.ts",
+    "lint": "echo 'Linting skipped'"
+  },
+  "keywords": [
+    "fhe",
+    "tfhe",
+    "fhish",
+    "privacy"
+  ],
+  "author": "FHISH Protocol",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "ethers": "^6.11.1",
+    "express": "^4.21.0",
+    "fhish-wasm": "file:../packages/fhish-wasm/pkg-node",
+    "prom-client": "^15.1.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.0",
+    "tsx": "^4.15.7",
+    "typescript": "^5.5.3"
+  }
+}

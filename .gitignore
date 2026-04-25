@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+*.tsbuildinfo
+
+# Keys (generated at setup, never commit)
+keys/
+keys-shortint/
+keys-carry2/
+keys-generic/
+*.bin
+*.txt
+!keys/.gitkeep
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Test / coverage
+coverage/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+gateway.log
+gateway.pid
+npm-debug.log*
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
