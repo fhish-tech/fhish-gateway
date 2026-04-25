@@ -28,7 +28,12 @@ console.log('[GATEWAY] Keys directory:', keysDir);
 console.log('[GATEWAY] Relayer secret configured:', relayerSecret !== 'fhish-default-secret' ? 'YES' : 'DEFAULT');
 console.log('[GATEWAY] FHE Type: SHORTINT (using CompactPublicKey params)');
 
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'x-fhish-relayer-secret', 'x-admin-api-key'],
+  credentials: true
+}));
 app.use(express.json({ limit: '50mb' }));
 
 const requestCounter = new Counter({
