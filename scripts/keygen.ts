@@ -32,23 +32,25 @@ async function main() {
     }
     
     console.log("[Keygen] Generating keys...");
-    const config = new fhis.FhisConfig();
+    const config = new fhis.FhisShortintConfig();
     console.log("[Keygen] Config built");
 
     let clientKey;
     try {
-      clientKey = fhis.FhisClientKey.generate(config);
+      clientKey = fhis.FhisShortintClientKey.new(config);
       console.log("[Keygen] Client key generated (Normal)");
-    } catch (e) {
-      console.log("[Keygen] Normal generation failed, using Deterministic Mode...");
-      // Use a fixed seed (BigInts for hi/lo bits)
-      clientKey = fhis.FhisClientKey.generate_deterministic(config, BigInt("0x1234567812345678"), BigInt("0x9abcdef09abcdef0"));
-      console.log("[Keygen] Client key generated (Deterministic)");
+    } catch (e: any) {
+      console.log("[Keygen] Generation failed:", e.message);
+      process.exit(1);
     }
     
     console.log('[Keygen] Generating compressed public key...');
-    const compressedPublicKey = fhis.FhisCompactPublicKey.new(clientKey);
+    const compressedPublicKey = fhis.FhisShortintCompressedPublicKey.new(clientKey);
     console.log('[Keygen] Compressed public key generated');
+
+    console.log('[Keygen] Generating server key...');
+    const serverKey = fhis.FhisShortintServerKey.new(clientKey);
+    console.log('[Keygen] Server key generated');
     
     console.log('[Keygen] Saving keys...');
     
@@ -56,12 +58,16 @@ async function main() {
     
     const clientKeySer = clientKey.serialize();
     const publicKeySer = compressedPublicKey.serialize();
+    const serverKeySer = serverKey.serialize();
     
-    fs.writeFileSync(path.join(keysDir, 'fhish_client_key.bin'), Buffer.from(clientKeySer));
+    fs.writeFileSync(path.join(keysDir, 'shortint_client_key.bin'), Buffer.from(clientKeySer));
     console.log('[Keygen] Client key saved:', clientKeySer.length, 'bytes');
     
-    fs.writeFileSync(path.join(keysDir, 'fhish_public_key.bin'), Buffer.from(publicKeySer));
+    fs.writeFileSync(path.join(keysDir, 'shortint_public_key.bin'), Buffer.from(publicKeySer));
     console.log('[Keygen] Public key saved:', publicKeySer.length, 'bytes');
+
+    fs.writeFileSync(path.join(keysDir, 'shortint_server_key.bin'), Buffer.from(serverKeySer));
+    console.log('[Keygen] Server key saved:', serverKeySer.length, 'bytes');
     
     const metadata = {
       clientKey: {
